@@ -1,5 +1,5 @@
 import Express from "express";
-import { ler } from "./src/aluno.js";
+import { ler, lerUm, inserir, atualizar } from "./src/aluno.js";
 
 
 const app = Express();
@@ -15,7 +15,7 @@ app.use(Express.urlencoded({extended : true}) );
 
 // rota (endpoint) para a raiz da API
 app.get('/', (req, res) => {
-    res.send('Raiz da aplicação...');
+    res.send('aprendendo sobre apis');
 })
 
 // rota (endpoint) para exibir todos os alunos
@@ -26,22 +26,38 @@ app.get('/alunos', (req, res) => {
 
 // rota (endpoint) para exibir um unico aluno
 app.get('/alunos/:id', (req, res) => {
-    res.send('exibindo dados de UM aluno');
+    // res.send('exibindo dados de UM aluno');
+
+    const id = parseInt(req.params.id);
+
+    lerUm(id, res);
 });
 
-// rota (endpoint) para inserir alunos 
+// rota (endpoint) para INSERIR alunos 
 app.post('/alunos', (req, res) => {
-    res.send('INSERINDO alunos');
+
+    // capturando os dados a partir do corpo de requisição
+    const novoAluno = req.body;
+
+    // executando a função inserir e passando parametros
+    inserir(novoAluno, res);
 });
 
 // rota (endpoint) para ATUALIZAR TODOS os dados do aluno
-app.put('/alunos/id', (req, res) => {
+app.put('/alunos/:id', (req, res) => {
     res.send('ATUALIZANDO TODOS os dados de um aluno');
 });
 
 // rota (endpoint) para ATUALIZAR TODOS/ALGUNS dos dados do aluno
-app.patch('/alunos/id', (req, res) => {
-    res.send('ATUALIZANDO TODOS/ALGUNS dos dados de um aluno');
+app.patch('/alunos/:id', (req, res) => {
+    // res.send('ATUALIZANDO TODOS/ALGUNS dos dados de um aluno');
+
+    // capturar ID
+    const id = parseInt(req.params.id);
+
+    const aluno = req.body;
+
+    atualizar(id, aluno, res);
 });
 
 // rota (endpoint) para EXCLUIR aluno
