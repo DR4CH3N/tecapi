@@ -3,7 +3,9 @@ import { ler, lerUm, inserir, atualizar, excluir } from "./src/aluno.js";
 
 
 const app = Express();
-const porta = 3000;
+// caso for local ele vai pegar a porta 3000, caso for porta da hospedagem ele vai usar a porta disponivel que a hospedagem dar
+// operador || significa "ou"  
+const porta =  process.env.PORT || 3000;
 
 // configurando suporte ao formato JSON
 app.use(Express.json());
